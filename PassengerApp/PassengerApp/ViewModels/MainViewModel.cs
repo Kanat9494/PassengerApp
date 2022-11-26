@@ -25,9 +25,4 @@ namespace PassengerApp.ViewModels
             catch (Exception ex) { return position; }
         }
     }
-
-    internal async Task<IEnumerable<DriverLocation>> GetNearByDrivers(DriverRequest driverRequest)
-    {
-
-    }
 }

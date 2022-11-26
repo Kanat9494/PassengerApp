@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using PassengerApp.ViewModels;
 using Xamarin.Essentials;
 using Xamarin.Forms.GoogleMaps;
+using PassengerApp.Models.DTOs.Responses;
 
 namespace PassengerApp
 {
@@ -15,6 +16,8 @@ namespace PassengerApp
     {
         MainViewModel mainViewModel;
         Position position;
+        IEnumerable<DriverLocation> getDrivers;
+        IEnumerable<DriverLocation> foundDrivers;
         public MainPage()
         {
             InitializeComponent();
