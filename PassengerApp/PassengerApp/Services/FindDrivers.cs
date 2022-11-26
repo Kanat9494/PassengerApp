@@ -6,13 +6,13 @@ using System.Text;
 
 namespace PassengerApp.Services
 {
-    internal class GetNearByDrivers
+    internal class FindDrivers
     {
-        private static GetNearByDrivers _instance;
+        private static FindDrivers _instance;
         private JsonSerializer _jsonSerializer = new JsonSerializer();
         private HttpClient httpClient;
 
-        public GetNearByDrivers() 
+        public FindDrivers() 
         { 
             httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri("http://192.168.1.51:45455");
