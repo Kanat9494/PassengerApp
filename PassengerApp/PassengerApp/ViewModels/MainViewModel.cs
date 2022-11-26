@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PassengerApp.Models.DTOs.Responses;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,5 +9,8 @@ namespace PassengerApp.ViewModels
     {
     }
 
-    internal async Task<IEnumerable<>>
+    internal async Task<IEnumerable<DriverLocationResponse>> GetNearByDrivers()
+    {
+
+    }
 }
