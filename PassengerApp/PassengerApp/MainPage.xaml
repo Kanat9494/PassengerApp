@@ -6,9 +6,11 @@
 
     <Grid>
         <map:Map x:Name="localMap" />
-        <StackLayout Orientation="Vertical" VerticalOptions="EndAndExpand">
-            <Entry Placeholder="Введите номер маршрутки" VerticalOptions="EndAndExpand" Margin="20"/>
-            <Button Text="Найти" VerticalOptions="EndAndExpand" Margin="20"/>
+        <StackLayout Orientation="Vertical" VerticalOptions="EndAndExpand" Background="#fff">
+            <Entry Placeholder="Введите номер маршрутки" VerticalOptions="EndAndExpand" Margin="20" 
+                   x:Name="BusNumber"/>
+            <Button Text="Найти" VerticalOptions="EndAndExpand" Margin="20" 
+                    Clicked="FindDriversButton_Clicked"/>
         </StackLayout>
     </Grid>
 

@@ -12,7 +12,7 @@ namespace PassengerApp.ViewModels
     internal class MainViewModel
     {
         Position position;
-        async Task<Position> GetUserLocation()
+        internal async Task<Position> GetUserLocation()
         {
             try
             {
