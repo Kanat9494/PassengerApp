@@ -70,14 +70,10 @@ namespace PassengerApp
                     else
                         foundDrivers.Add(driver);
 
-                    Pin BusePins = new Pin()
-                    {
-                        Label = busNumber,
-                        Type = PinType.Place,
-                        Icon = (Device.RuntimePlatform == Device.Android) ? BitmapDescriptorFactory.FromBundle("CarPins.png") : BitmapDescriptorFactory.FromView(new Image() { Source = "CarPins.png", WidthRequest = 30, HeightRequest = 30 }),
-                        Position = new Position(foundDrivers[i].Latitude, foundDrivers[i].Longitude);
-                    };
+                    
                 }
+
+
                 //foreach (var foundDriver in foundDrivers)
                 //{
                 //    if (foundDriver.DriverId == driver.DriverId)
@@ -88,6 +84,17 @@ namespace PassengerApp
                 //    else
                 //        foundDrivers.Add(driver);
                 //}
+            }
+
+            foreach (var driver in foundDrivers)
+            {
+                Pin BusePins = new Pin()
+                {
+                    Label = busNumber,
+                    Type = PinType.Place,
+                    Icon = (Device.RuntimePlatform == Device.Android) ? BitmapDescriptorFactory.FromBundle("CarPins.png") : BitmapDescriptorFactory.FromView(new Image() { Source = "CarPins.png", WidthRequest = 30, HeightRequest = 30 }),
+                    Position = new Position(driver.Latitude, driver.Longitude)
+                };
             }
         }
     }
