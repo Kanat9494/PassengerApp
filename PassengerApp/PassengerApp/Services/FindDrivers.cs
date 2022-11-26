@@ -22,11 +22,18 @@ namespace PassengerApp.Services
             httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<IEnumerable<DriverResponse>> FindNearByDrivers()
+        public async Task<IEnumerable<DriverResponse>> FindNearByDrivers(DriverRequest driverRequest)
         {
             try
             {
+                var content = new StringContent(JsonConvert.SerializeObject(driverRequest), Encoding.UTF8, "application/json");
+                var response = await httpClient.PostAsync("api/Driver/GetNearByDrivers", content);
 
+                if (response.IsSuccessStatusCode || response != null)
+                {
+                    var jsonResult = await response.Content.ReadAsStringAsync();
+
+                }
             }
             catch (Exception ex) { }
         }
