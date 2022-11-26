@@ -13,24 +13,13 @@ namespace PassengerApp
 {
     public partial class MainPage : ContentPage
     {
+        MainViewModel mainViewModel;
         Position position;
         public MainPage()
         {
             InitializeComponent();
 
-            BindingContext = new MainViewModel();
-        }
-
-        async Task GetUserLocation()
-        {
-            try
-            {
-                var request = new GeolocationRequest(GeolocationAccuracy.High);
-                var location = await Geolocation.GetLocationAsync(request);
-
-                position = new Position(location.Latitude, location.Longitude);
-            }
-            catch (Exception ex) { }
+            BindingContext = mainViewModel = new MainViewModel();
         }
     }
 }

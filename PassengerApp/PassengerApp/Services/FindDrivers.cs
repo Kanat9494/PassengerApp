@@ -14,6 +14,7 @@ namespace PassengerApp.Services
         private static FindDrivers _instance;
         private JsonSerializer _jsonSerializer = new JsonSerializer();
         private HttpClient httpClient;
+        IEnumerable<DriverLocation> _drivers;
 
         public FindDrivers() 
         { 
@@ -22,7 +23,7 @@ namespace PassengerApp.Services
             httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<IEnumerable<DriverResponse>> FindNearByDrivers(DriverRequest driverRequest)
+        public async Task<IEnumerable<DriverLocation>> FindNearByDrivers(DriverRequest driverRequest)
         {
             try
             {
@@ -32,10 +33,12 @@ namespace PassengerApp.Services
                 if (response.IsSuccessStatusCode || response != null)
                 {
                     var jsonResult = await response.Content.ReadAsStringAsync();
-
+                    _drivers = JsonConvert.DeserializeObject<IEnumerable<DriverLocation>>(jsonResult);
+                    return _drivers;
                 }
+                return null;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { return null; }
         }
     }
 }
