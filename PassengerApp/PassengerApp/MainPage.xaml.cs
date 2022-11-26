@@ -55,21 +55,16 @@ namespace PassengerApp
 
             foreach (var driver in getDrivers)
             {
-                if (foundDrivers.Count == 0)
-                    foundDrivers.Add(driver);
-                else
+                
+                var foundDriver = foundDrivers.Find(x => x.DriverId == driver.DriverId);
+                if (foundDriver != null)
                 {
-                    for (int i = 0; i < foundDrivers.Count; i++)
-                    {
-                        if (foundDrivers[i].DriverId == driver.DriverId)
-                        {
-                            foundDrivers[i].Latitude = driver.Latitude;
-                            foundDrivers[i].Longitude = driver.Longitude;
-                        }
-                        else
-                            foundDrivers.Add(driver);
-                    }
+                    //Pin newPin = new Pin() { Position = new Position (foundDriver.Latitude, foundDriver.Longitude ) };
+                    foundDriver.Latitude = driver.Latitude;
+                    foundDriver.Longitude = driver.Longitude;
                 }
+                else
+                    foundDrivers.Add(driver);
             }
 
             Indicator.IsEnabled = false;
@@ -86,6 +81,11 @@ namespace PassengerApp
                 };
                 localMap.Pins.Add(BusPins);
             }
+        }
+
+        private void RemovePin(Pin pin)
+        {
+            localMap.Pins.Remove(pin);
         }
     }
 }
