@@ -75,6 +75,7 @@ namespace PassengerApp
                         Label = busNumber,
                         Type = PinType.Place,
                         Icon = (Device.RuntimePlatform == Device.Android) ? BitmapDescriptorFactory.FromBundle("CarPins.png") : BitmapDescriptorFactory.FromView(new Image() { Source = "CarPins.png", WidthRequest = 30, HeightRequest = 30 }),
+                        Position = new Position(foundDrivers[i].Latitude, foundDrivers[i].Longitude);
                     };
                 }
                 //foreach (var foundDriver in foundDrivers)
