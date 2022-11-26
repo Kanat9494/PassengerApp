@@ -4,6 +4,7 @@ using System.Linq;
 
 using Foundation;
 using UIKit;
+using PassengerApp.Constants;
 
 namespace PassengerApp.iOS
 {
@@ -23,6 +24,7 @@ namespace PassengerApp.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+            Xamarin.FormsGoogleMaps.Init(AppConstants.GoogleMapsApiKey);
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

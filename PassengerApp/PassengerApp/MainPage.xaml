@@ -1,9 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:map="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
              x:Class="PassengerApp.MainPage">
 
     <Grid>
+        <map:Map x:Name="localMap" />
         <StackLayout Orientation="Vertical" VerticalOptions="EndAndExpand">
             <Entry Placeholder="Введите номер маршрутки" VerticalOptions="EndAndExpand" Margin="20"/>
             <Button Text="Найти" VerticalOptions="EndAndExpand" Margin="20"/>

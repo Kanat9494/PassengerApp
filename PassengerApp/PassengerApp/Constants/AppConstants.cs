@@ -6,6 +6,6 @@ namespace PassengerApp.Constants
 {
     public class AppConstants
     {
-        //AIzaSyA5qwURk3rnuvsGTuKxoPNzzOzCArKjGfg
+        public const string GoogleMapsApiKey = "AIzaSyA5qwURk3rnuvsGTuKxoPNzzOzCArKjGfg";
     }
 }

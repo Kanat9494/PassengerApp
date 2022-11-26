@@ -5,6 +5,8 @@ using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
 using AndroidX.AppCompat.App;
+using AndroidX.Core.OS;
+using Plugin.CurrentActivity;
 
 namespace PassengerApp.Droid
 {
@@ -15,10 +17,14 @@ namespace PassengerApp.Droid
         {
             base.OnCreate(savedInstanceState);
 
+            CrossCurrentActivity.Current.Init(this, savedInstanceState);
+
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
             AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightNo;
+
+            Xamarin.FormsGoogleMaps.Init(this, savedInstanceState);
 
             LoadApplication(new App());
         }
