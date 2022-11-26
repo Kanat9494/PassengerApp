@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PassengerApp.Models.DTOs.Requests
 {
-    public class DriverLocationRequest
+    public class DriverRequest
     {
         public string BusNumber { get; set; }
         public double Latitude { get; set; }

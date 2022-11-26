@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
+using PassengerApp.Models.DTOs.Requests;
+using PassengerApp.Models.DTOs.Responses;
 
 namespace PassengerApp.Services
 {
@@ -17,6 +20,11 @@ namespace PassengerApp.Services
             httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri("http://192.168.1.51:45455");
             httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+        }
+
+        public async Task<IEnumerable<DriverResponse>> FindNearByDrivers()
+        {
+
         }
     }
 }

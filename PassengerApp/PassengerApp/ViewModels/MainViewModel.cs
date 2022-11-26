@@ -9,7 +9,7 @@ namespace PassengerApp.ViewModels
     {
     }
 
-    internal async Task<IEnumerable<DriverLocationResponse>> GetNearByDrivers()
+    internal async Task<IEnumerable<DriverResponse>> GetNearByDrivers()
     {
 
     }
