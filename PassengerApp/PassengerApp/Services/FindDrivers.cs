@@ -24,7 +24,11 @@ namespace PassengerApp.Services
 
         public async Task<IEnumerable<DriverResponse>> FindNearByDrivers()
         {
+            try
+            {
 
+            }
+            catch (Exception ex) { }
         }
     }
 }
