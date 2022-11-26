@@ -22,26 +22,21 @@ namespace PassengerApp
         List<DriverLocation> foundDrivers;
         DriverRequest driverRequest;
         string busNumber;
+        private bool isEmpty;
         public MainPage()
         {
             InitializeComponent();
 
             BindingContext = mainViewModel = new MainViewModel();
 
-            foundDrivers = new List<DriverLocation>()
-            {
-                new DriverLocation()
-                {
-                    DriverId = 3,
-                    Latitude = 36.0034,
-                    Longitude = 5.34
-                }
-            };
+            foundDrivers = new List<DriverLocation>();
             getDrivers = new List<DriverLocation>();
         }
 
         async void FindDriversButton_Clicked(object sender, EventArgs e)
         {
+            Indicator.IsRunning = true;
+            Indicator.IsEnabled = true;
             getDrivers.Clear();
             busNumber = this.BusNumber.Text;
             position = await mainViewModel.GetUserLocation();
@@ -60,41 +55,36 @@ namespace PassengerApp
 
             foreach (var driver in getDrivers)
             {
-                for (int i = 0; i < foundDrivers.Count; i++)
+                if (foundDrivers.Count == 0)
+                    foundDrivers.Add(driver);
+                else
                 {
-                    if (foundDrivers[i].DriverId == driver.DriverId)
+                    for (int i = 0; i < foundDrivers.Count; i++)
                     {
-                        foundDrivers[i].Latitude = driver.Latitude;
-                        foundDrivers[i].Longitude = driver.Longitude;
+                        if (foundDrivers[i].DriverId == driver.DriverId)
+                        {
+                            foundDrivers[i].Latitude = driver.Latitude;
+                            foundDrivers[i].Longitude = driver.Longitude;
+                        }
+                        else
+                            foundDrivers.Add(driver);
                     }
-                    else
-                        foundDrivers.Add(driver);
-
-                    
                 }
-
-
-                //foreach (var foundDriver in foundDrivers)
-                //{
-                //    if (foundDriver.DriverId == driver.DriverId)
-                //    {
-                //        foundDriver.Latitude = driver.Latitude;
-                //        foundDriver.Longitude = driver.Longitude;
-                //    }
-                //    else
-                //        foundDrivers.Add(driver);
-                //}
             }
+
+            Indicator.IsEnabled = false;
+            Indicator.IsRunning = false;
 
             foreach (var driver in foundDrivers)
             {
-                Pin BusePins = new Pin()
+                Pin BusPins = new Pin()
                 {
                     Label = busNumber,
                     Type = PinType.Place,
                     Icon = (Device.RuntimePlatform == Device.Android) ? BitmapDescriptorFactory.FromBundle("CarPins.png") : BitmapDescriptorFactory.FromView(new Image() { Source = "CarPins.png", WidthRequest = 30, HeightRequest = 30 }),
                     Position = new Position(driver.Latitude, driver.Longitude)
                 };
+                localMap.Pins.Add(BusPins);
             }
         }
     }

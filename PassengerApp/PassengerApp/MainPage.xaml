@@ -12,6 +12,9 @@
             <Button Text="Найти" VerticalOptions="EndAndExpand" Margin="20" 
                     Clicked="FindDriversButton_Clicked"/>
         </StackLayout>
+        <ActivityIndicator IsRunning="False" x:Name="Indicator"
+                           HorizontalOptions="Center" HeightRequest="100"
+                           Color="#20e32d"/>
     </Grid>
 
 </ContentPage>
