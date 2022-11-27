@@ -23,6 +23,7 @@ namespace PassengerApp
         DriverRequest driverRequest;
         string busNumber;
         private bool isEmpty;
+        Pin BusPins;
         public MainPage()
         {
             InitializeComponent();
@@ -70,9 +71,11 @@ namespace PassengerApp
             Indicator.IsEnabled = false;
             Indicator.IsRunning = false;
 
+            localMap.Pins.Remove(BusPins);
+
             foreach (var driver in foundDrivers)
             {
-                Pin BusPins = new Pin()
+                BusPins = new Pin()
                 {
                     Label = busNumber,
                     Type = PinType.Place,
