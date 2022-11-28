@@ -63,45 +63,85 @@ namespace PassengerApp
                 Longitude = position.Longitude
             };
 
-            timer = new Timer(async (object stateInfo) =>
+            getDrivers = await FindDrivers.Instance.FindNearByDrivers(driverRequest);
+            if (getDrivers == null)
             {
-                getDrivers = await FindDrivers.Instance.FindNearByDrivers(driverRequest);
-                if (getDrivers == null)
-                {
-                    return;
-                }
+                return;
+            }
 
-                //foreach (var driver in getDrivers)
-                //{
+            Indicator.IsEnabled = false;
+            Indicator.IsRunning = false;
 
-                //    var foundDriver = foundDrivers.Find(x => x.DriverId == driver.DriverId);
-                //    if (foundDriver != null)
-                //    {
-                //        //Pin newPin = new Pin() { Position = new Position (foundDriver.Latitude, foundDriver.Longitude ) };
-                //        foundDriver.Latitude = driver.Latitude;
-                //        foundDriver.Longitude = driver.Longitude;
-                //    }
-                //    else
-                //        foundDrivers.Add(driver);
-                //}
+            localMap.Pins.Remove(BusPins);
 
-                Indicator.IsEnabled = false;
-                Indicator.IsRunning = false;
+            //Device.StartTimer(TimeSpan.FromSeconds(5), () =>
+            //{
+            //    Task.Factory.StartNew(async () =>
+            //    {
+            //        getDrivers = await FindDrivers.Instance.FindNearByDrivers(driverRequest);
+            //        if (getDrivers == null)
+            //        { 
+            //            return;
+            //        }
 
-                localMap.Pins.Remove(BusPins);
+            //        Device.BeginInvokeOnMainThread(() =>
+            //        {
+            //            foreach (var driver in getDrivers)
+            //            {
+            //                BusPins = new Pin()
+            //                {
+            //                    Label = busNumber,
+            //                    Type = PinType.Place,
+            //                    Icon = (Device.RuntimePlatform == Device.Android) ? BitmapDescriptorFactory.FromBundle("CarPins.png") : BitmapDescriptorFactory.FromView(new Image() { Source = "CarPins.png", WidthRequest = 30, HeightRequest = 30 }),
+            //                    Position = new Position(driver.Latitude, driver.Longitude)
+            //                };
+            //                localMap.Pins.Add(BusPins);
+            //            }
+            //        });
+            //    });
 
-                //foreach (var driver in getDrivers)
-                //{
-                //    BusPins = new Pin()
-                //    {
-                //        Label = busNumber,
-                //        Type = PinType.Place,
-                //        Icon = (Device.RuntimePlatform == Device.Android) ? BitmapDescriptorFactory.FromBundle("CarPins.png") : BitmapDescriptorFactory.FromView(new Image() { Source = "CarPins.png", WidthRequest = 30, HeightRequest = 30 }),
-                //        Position = new Position(driver.Latitude, driver.Longitude)
-                //    };
-                //    localMap.Pins.Add(BusPins);
-                //}
-            }, new AutoResetEvent(false), 4000, 4000);
+
+            //    return true;
+            //});
+            //timer = new Timer(async (object stateInfo) =>
+            //{
+            //    getDrivers = await FindDrivers.Instance.FindNearByDrivers(driverRequest);
+            //    if (getDrivers == null)
+            //    {
+            //        return;
+            //    }
+
+            //    //foreach (var driver in getDrivers)
+            //    //{
+
+            //    //    var foundDriver = foundDrivers.Find(x => x.DriverId == driver.DriverId);
+            //    //    if (foundDriver != null)
+            //    //    {
+            //    //        //Pin newPin = new Pin() { Position = new Position (foundDriver.Latitude, foundDriver.Longitude ) };
+            //    //        foundDriver.Latitude = driver.Latitude;
+            //    //        foundDriver.Longitude = driver.Longitude;
+            //    //    }
+            //    //    else
+            //    //        foundDrivers.Add(driver);
+            //    //}
+
+            //    Indicator.IsEnabled = false;
+            //    Indicator.IsRunning = false;
+
+            //    localMap.Pins.Remove(BusPins);
+
+            //    //foreach (var driver in getDrivers)
+            //    //{
+            //    //    BusPins = new Pin()
+            //    //    {
+            //    //        Label = busNumber,
+            //    //        Type = PinType.Place,
+            //    //        Icon = (Device.RuntimePlatform == Device.Android) ? BitmapDescriptorFactory.FromBundle("CarPins.png") : BitmapDescriptorFactory.FromView(new Image() { Source = "CarPins.png", WidthRequest = 30, HeightRequest = 30 }),
+            //    //        Position = new Position(driver.Latitude, driver.Longitude)
+            //    //    };
+            //    //    localMap.Pins.Add(BusPins);
+            //    //}
+            //}, new AutoResetEvent(false), 4000, 4000);
 
             //getDrivers = await FindDrivers.Instance.FindNearByDrivers(driverRequest);
             //if (getDrivers == null)
@@ -111,7 +151,7 @@ namespace PassengerApp
 
             //foreach (var driver in getDrivers)
             //{
-                
+
             //    var foundDriver = foundDrivers.Find(x => x.DriverId == driver.DriverId);
             //    if (foundDriver != null)
             //    {
@@ -128,22 +168,17 @@ namespace PassengerApp
 
             //localMap.Pins.Remove(BusPins);
 
-            //foreach (var driver in foundDrivers)
-            //{
-            //    BusPins = new Pin()
-            //    {
-            //        Label = busNumber,
-            //        Type = PinType.Place,
-            //        Icon = (Device.RuntimePlatform == Device.Android) ? BitmapDescriptorFactory.FromBundle("CarPins.png") : BitmapDescriptorFactory.FromView(new Image() { Source = "CarPins.png", WidthRequest = 30, HeightRequest = 30 }),
-            //        Position = new Position(driver.Latitude, driver.Longitude)
-            //    };
-            //    localMap.Pins.Add(BusPins);
-            //}
-        }
-
-        private void RemovePin(Pin pin)
-        {
-            localMap.Pins.Remove(pin);
+            foreach (var driver in getDrivers)
+            {
+                BusPins = new Pin()
+                {
+                    Label = busNumber,
+                    Type = PinType.Place,
+                    Icon = (Device.RuntimePlatform == Device.Android) ? BitmapDescriptorFactory.FromBundle("CarPins.png") : BitmapDescriptorFactory.FromView(new Image() { Source = "CarPins.png", WidthRequest = 30, HeightRequest = 30 }),
+                    Position = new Position(driver.Latitude, driver.Longitude)
+                };
+                localMap.Pins.Add(BusPins);
+            }
         }
     }
 }
