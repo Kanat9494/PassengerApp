@@ -7,10 +7,23 @@
     <Grid>
         <map:Map x:Name="localMap" />
         <StackLayout Orientation="Vertical" VerticalOptions="EndAndExpand" Background="#fff">
-            <Entry Placeholder="Введите номер маршрутки" VerticalOptions="EndAndExpand" Margin="20" 
-                   x:Name="BusNumber"/>
-            <Button Text="Найти" VerticalOptions="EndAndExpand" Margin="20" 
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="80"/>
+                </Grid.RowDefinitions>
+                <Entry Placeholder="Введите номер маршрутки" VerticalOptions="Center" Margin="10" 
+                   x:Name="BusNumber" Grid.Row="0" Grid.ColumnSpan="2"
+                       HorizontalOptions="CenterAndExpand"/>
+                <Button Text="Найти" VerticalOptions="EndAndExpand" Margin="10" Grid.Column="0" Grid.Row="1"
                     Clicked="FindDriversButton_Clicked"/>
+                <Button Text="Отменить поиск" VerticalOptions="EndAndExpand" Margin="10" Grid.Row="1" Grid.Column="1"
+                    Clicked="CancelSearchingButton_Clicked"/>
+            </Grid>
         </StackLayout>
         
         <ActivityIndicator IsRunning="False" x:Name="Indicator"

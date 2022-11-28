@@ -189,5 +189,23 @@ namespace PassengerApp
             //    localMap.Pins.Add(BusPins);
             //}
         }
+
+        void CancelSearchingButton_Clicked(object sender, EventArgs e)
+        {
+            isSearching = false;
+            localMap.Pins.Clear();
+            Position localPosition = new Position(42.853070, 74.526750);
+
+            Pin localPin = new Pin()
+            {
+                Label = "Ваше местоположение",
+                Type = PinType.Place,
+                Icon = (Device.RuntimePlatform == Device.Android) ? BitmapDescriptorFactory.FromBundle("PickupPin.png") : BitmapDescriptorFactory.FromView(new Image() { Source = "PickupPin.png", WidthRequest = 30, HeightRequest = 30 }),
+                Position = new Position(42.853070, 74.526750)
+            };
+            localMap.Pins.Add(localPin);
+            localMap.MoveToRegion(MapSpan.FromCenterAndRadius(localPosition, Distance.FromMeters(2000)));
+        }
+
     }
 }
