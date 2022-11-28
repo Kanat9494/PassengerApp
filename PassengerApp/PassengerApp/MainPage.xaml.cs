@@ -26,6 +26,7 @@ namespace PassengerApp
         private bool isEmpty;
         Pin BusPins;
         private Timer timer;
+        private bool isSearching = false;
         public MainPage()
         {
             InitializeComponent();
@@ -38,6 +39,7 @@ namespace PassengerApp
 
         async void FindDriversButton_Clicked(object sender, EventArgs e)
         {
+            isSearching = true;
             Indicator.IsRunning = true;
             Indicator.IsEnabled = true;
             getDrivers.Clear();
@@ -63,46 +65,53 @@ namespace PassengerApp
                 Longitude = position.Longitude
             };
 
-            getDrivers = await FindDrivers.Instance.FindNearByDrivers(driverRequest);
-            if (getDrivers == null)
-            {
-                return;
-            }
+            //getDrivers = await FindDrivers.Instance.FindNearByDrivers(driverRequest);
+            //if (getDrivers == null)
+            //{
+            //    return;
+            //}
 
             Indicator.IsEnabled = false;
             Indicator.IsRunning = false;
 
             localMap.Pins.Remove(BusPins);
 
-            //Device.StartTimer(TimeSpan.FromSeconds(5), () =>
-            //{
-            //    Task.Factory.StartNew(async () =>
-            //    {
-            //        getDrivers = await FindDrivers.Instance.FindNearByDrivers(driverRequest);
-            //        if (getDrivers == null)
-            //        { 
-            //            return;
-            //        }
+            
+            Device.StartTimer(TimeSpan.FromSeconds(5), () =>
+            {
+                if (isSearching)
+                {
+                    Task.Factory.StartNew(async () =>
+                    {
+                        getDrivers = await FindDrivers.Instance.FindNearByDrivers(driverRequest);
+                        if (getDrivers == null)
+                        {
+                            await DisplayAlert("Поиск остановлен", "Поиск маршруток был остановлен", "Ок");
+                            return;
+                        }
 
-            //        Device.BeginInvokeOnMainThread(() =>
-            //        {
-            //            foreach (var driver in getDrivers)
-            //            {
-            //                BusPins = new Pin()
-            //                {
-            //                    Label = busNumber,
-            //                    Type = PinType.Place,
-            //                    Icon = (Device.RuntimePlatform == Device.Android) ? BitmapDescriptorFactory.FromBundle("CarPins.png") : BitmapDescriptorFactory.FromView(new Image() { Source = "CarPins.png", WidthRequest = 30, HeightRequest = 30 }),
-            //                    Position = new Position(driver.Latitude, driver.Longitude)
-            //                };
-            //                localMap.Pins.Add(BusPins);
-            //            }
-            //        });
-            //    });
-
-
-            //    return true;
-            //});
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            localMap.Pins.Clear();
+                            foreach (var driver in getDrivers)
+                            {
+                                BusPins = new Pin()
+                                {
+                                    Label = busNumber,
+                                    Type = PinType.Place,
+                                    Icon = (Device.RuntimePlatform == Device.Android) ? BitmapDescriptorFactory.FromBundle("CarPins.png") : BitmapDescriptorFactory.FromView(new Image() { Source = "CarPins.png", WidthRequest = 30, HeightRequest = 30 }),
+                                    Position = new Position(driver.Latitude, driver.Longitude)
+                                };
+                                localMap.Pins.Add(BusPins);
+                            }
+                        });
+                    });
+                    return true;
+                }
+                else
+                    return false;
+            });
+            
             //timer = new Timer(async (object stateInfo) =>
             //{
             //    getDrivers = await FindDrivers.Instance.FindNearByDrivers(driverRequest);
@@ -168,17 +177,17 @@ namespace PassengerApp
 
             //localMap.Pins.Remove(BusPins);
 
-            foreach (var driver in getDrivers)
-            {
-                BusPins = new Pin()
-                {
-                    Label = busNumber,
-                    Type = PinType.Place,
-                    Icon = (Device.RuntimePlatform == Device.Android) ? BitmapDescriptorFactory.FromBundle("CarPins.png") : BitmapDescriptorFactory.FromView(new Image() { Source = "CarPins.png", WidthRequest = 30, HeightRequest = 30 }),
-                    Position = new Position(driver.Latitude, driver.Longitude)
-                };
-                localMap.Pins.Add(BusPins);
-            }
+            //foreach (var driver in getDrivers)
+            //{
+            //    BusPins = new Pin()
+            //    {
+            //        Label = busNumber,
+            //        Type = PinType.Place,
+            //        Icon = (Device.RuntimePlatform == Device.Android) ? BitmapDescriptorFactory.FromBundle("CarPins.png") : BitmapDescriptorFactory.FromView(new Image() { Source = "CarPins.png", WidthRequest = 30, HeightRequest = 30 }),
+            //        Position = new Position(driver.Latitude, driver.Longitude)
+            //    };
+            //    localMap.Pins.Add(BusPins);
+            //}
         }
     }
 }
